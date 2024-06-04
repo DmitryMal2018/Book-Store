@@ -28,8 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
+# Список строк, обозначающих все приложения, которые включены в данной установке Django.
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Local
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -70,13 +71,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'configuration.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# Словарь, содержащий настройки для базы данных Postgresql, которая будет использоваться с Django.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # Выбираем встроенный бэкенд для базы данных postgresql
+        'ENGINE': 'django.db.backends.postgresql',
+        # Выбираем имя, используемой базы данных postgresql
+        'NAME': 'postgres',
+        # Выбираем имя пользователя, которое будет использоваться при подключении к базе      
+        # данных postgresql
+        'USER': 'postgres',
+        # Выбираем пароль, используемый при подключении к базе данных postgresql
+        'PASSWORD': 'postgres',
+        # Выбираем хост для подключения базы данных postgresql
+        'HOST': 'db',
+        # Порт 5432 используется при подключении к базе данных postgresql
+        'PORT': 5432,
     }
 }
 
@@ -121,3 +133,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Модель, используемая для представления пользователя
+AUTH_USER_MODEL = 'accounts.CustomUser'
