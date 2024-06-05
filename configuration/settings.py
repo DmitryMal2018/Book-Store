@@ -141,3 +141,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Модель, используемая для представления пользователя
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+# URL или именованный шаблон URL, куда перенаправляются запросы после входа в систему.
+LOGIN_REDIRECT_URL = 'home'
+
+
+# URL или именованный шаблон URL, куда перенаправляются запросы после выхода из системы.
+LOGOUT_REDIRECT_URL = 'home'
