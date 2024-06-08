@@ -36,10 +36,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Local
+
+    # Сторонние приложения
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+    # Локальные приложения
     'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,10 +134,18 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+# URL, используемый при обращении к статическим файлам (CSS, JavaScript, Images).
 STATIC_URL = 'static/'
+
+# Этот параметр определяет дополнительные места, которые приложение staticfiles будет обходить
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Абсолютный путь к директории, в которой collectstatic будет собирать статические файлы для развертывания.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Хранилище файлов, которое будет использоваться при сборе статических файлов с помощью команды управления collectstatic.
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -149,3 +163,11 @@ LOGIN_REDIRECT_URL = 'home'
 
 # URL или именованный шаблон URL, куда перенаправляются запросы после выхода из системы.
 LOGOUT_REDIRECT_URL = 'home'
+
+
+# Пакет шаблонов Bootstrap5 для django-crispy-forms. 
+# Установка bootstrap5 как разрешенный пакет шаблонов.
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+# Пакет шаблонов по умолчанию для вашего проекта django.
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
