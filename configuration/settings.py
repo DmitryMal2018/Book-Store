@@ -1,4 +1,10 @@
 from pathlib import Path
+from environs import Env
+
+env = Env()
+
+env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -7,13 +13,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sl8(jhd(^i%13&j@-!w79e-_h)9hqx4m@w$zf02+^#3ws@x)as'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Секретный ключ для конкретной установки Django. 
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-ALLOWED_HOSTS = []
+
+# Режим отладки, в режиме "production" должен быть "False"
+DEBUG = env.bool('DJANGO_DEBUG')
+
+
+# Список строк, представляющих имена хостов/доменов, которые может обслуживать этот Django-сайт
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Список строк, обозначающих все приложения, которые включены в данной установке Django.
@@ -107,23 +117,7 @@ WSGI_APPLICATION = 'configuration.wsgi.application'
 
 # Словарь, содержащий настройки для базы данных Postgresql, которая будет использоваться с Django.
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # Выбираем встроенный бэкенд для базы данных postgresql
-        'ENGINE': 'django.db.backends.postgresql',
-        # Выбираем имя, используемой базы данных postgresql
-        'NAME': 'postgres',
-        # Выбираем имя пользователя, которое будет использоваться при подключении к базе      
-        # данных postgresql
-        'USER': 'postgres',
-        # Выбираем пароль, используемый при подключении к базе данных postgresql
-        'PASSWORD': 'postgres',
-        # Выбираем хост для подключения базы данных postgresql
-        'HOST': 'db',
-        # Порт 5432 используется при подключении к базе данных postgresql
-        'PORT': 5432,
-    }
+    'default': env.dj_db_url('DATABASE_URL', default='postgres://postgres@db/postgres')
 }
 
 
