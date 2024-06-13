@@ -89,6 +89,8 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 # Обеспечьте уникальность адресов электронной почты.
 ACCOUNT_UNIQUE_EMAIL = True
+# Этот адрес используется в заголовке From: исходящих писем
+DEFAULT_FROM_EMAIL = 'admin@bookstore.com'
 
 
 ROOT_URLCONF = 'configuration.urls'
