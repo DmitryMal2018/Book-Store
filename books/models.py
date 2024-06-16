@@ -18,6 +18,11 @@ class Book(models.Model):
     published = models.DateField()
     cover = models.ImageField(upload_to='covers/', blank=True)
 
+    class Meta:
+        permissions = [
+            ('special_status', 'Can read all books'),
+        ]
+
     def __str__(self):
         return self.title
 
