@@ -13,9 +13,10 @@ class Book(models.Model):
     author = models.CharField(max_length=200)
     genre = models.CharField(max_length=200)
     annotation = models.TextField()
-    rating = models.DecimalField(max_digits=2, decimal_places=2)
+    rating = models.DecimalField(max_digits=3, decimal_places=2)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     published = models.DateField()
+    cover = models.ImageField(upload_to='covers/', blank=True)
 
     def __str__(self):
         return self.title

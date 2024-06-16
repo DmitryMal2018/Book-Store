@@ -167,6 +167,12 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Хранилище файлов, которое будет использоваться при сборе статических файлов с помощью команды управления collectstatic.
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
+# URL-адрес, передающий медиафайлы, обслуживаемые из MEDIA_ROOT, используемый для управления сохраненными файлами.
+MEDIA_URL = '/media/'
+
+# Абсолютный путь к директории, в которой будут храниться загружаемые пользователем файлы.
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
