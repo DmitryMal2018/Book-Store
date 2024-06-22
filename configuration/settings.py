@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
  #   'allauth.socialaccount',
  #   'allauth.socialaccount.providers.github',
+    'debug_toolbar',
 
     # Локальные приложения
     'accounts.apps.AccountsConfig',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 
 # Список активизированных промежуточных ПО для использования. 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,7 +63,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+
+# Настройка кэша
+# Псевдоним кэша, который будет использоваться для хранения.
+CACHE_MIDDLEWARE_ALIAS = 'default'
+# Целое число секунд (одна неделя), в течение которых каждая страница должна кэшироваться.
+CACHE_MIDDLEWARE_SECONDS = 604800
+# Название сайта, если используется несколько сайтов
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 
 # Конфигурация django-allauth
@@ -198,3 +211,12 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 # Пакет шаблонов по умолчанию для вашего проекта django.
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+# Настройка django-debug-toolbar.
+# Список IP-адресов в виде строк.
+import socket
+
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
