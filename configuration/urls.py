@@ -5,15 +5,13 @@ from django.urls import path, include
 
 urlpatterns = [
     # Django-администратор
-    path('admin/', admin.site.urls),
+    path('anything-but-admin/', admin.site.urls),
     # Управления пользователями
     path('accounts/', include('allauth.urls')),
     # Локальные приложения
     path('', include('pages.urls')),
     path("books/", include("books.urls")),
-] + static(
-    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-)
+] 
 
 if settings.DEBUG:
     import debug_toolbar

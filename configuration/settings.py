@@ -19,7 +19,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 
 # Режим отладки, в режиме "production" должен быть "False"
-DEBUG = env.bool('DJANGO_DEBUG')
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
 
 # Список строк, представляющих имена хостов/доменов, которые может обслуживать этот Django-сайт
@@ -178,7 +178,15 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Хранилище файлов, которое будет использоваться при сборе статических файлов с помощью команды управления collectstatic.
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
 
 # URL-адрес, передающий медиафайлы, обслуживаемые из MEDIA_ROOT, используемый для управления сохраненными файлами.
 MEDIA_URL = '/media/'
@@ -220,3 +228,42 @@ import socket
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+DEBUG_TOOLBAR_CONFIG = {
+    'IS_RUNNING_TESTS': False,
+}
+
+
+# Если значение True, то SecurityMiddleware перенаправляет все не-HTTPS запросы на HTTPS, кроме URL, указанных в SECURE_REDIRECT_EXEMPT
+SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+
+
+# Запрещает подключение подключение к вашему доменному имени через незащищенное соединение в течение определенного периода времени.
+SECURE_HSTS_SECONDS = env.int(
+    "DJANGO_SECURE_HSTS_SECONDS",
+    default=2592000
+)
+
+# Это рекомендуется (при условии, что все поддомены обслуживаются исключительно с использованием HTTPS) иначе ваш сайт может быть уязвим.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+    "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS",
+    default=True
+)
+
+# Отправляет свой сайт в список предварительной загрузки браузера, установив  параметр SECURE_HSTS_PRELOAD в значение True.
+SECURE_HSTS_PRELOAD = env.bool(
+    "DJANGO_SECURE_HSTS_PRELOAD",
+    default=True
+)
+
+# При значении True, куки будут помечены как "безопасные", т.е. браузеры могут гарантируют, что куки будут отправляться только через HTTPS-соединение.
+SESSION_COOKIE_SECURE = env.bool(
+    "DJANGO_SESSION_COOKIE_SECURE", 
+    default=True
+)
+
+# Храненить CSRF-токены в куках (по умолчанию в Django) безопасно, но храненить его в сессии является обычной практикой в других веб-фреймворках.
+CSRF_COOKIE_SECURE = env.bool(
+    "DJANGO_CSRF_COOKIE_SECURE", 
+    default=True
+)
