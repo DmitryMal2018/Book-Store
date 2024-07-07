@@ -23,7 +23,7 @@ DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
 
 # Список строк, представляющих имена хостов/доменов, которые может обслуживать этот Django-сайт
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['www.MalDim.pythonanywhere.com', 'MalDim.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 # Список строк, обозначающих все приложения, которые включены в данной установке Django.
